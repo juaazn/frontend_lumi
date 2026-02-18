@@ -1,3 +1,11 @@
+---
+import Header from "../components/header/Header.astro"
+import { getHome } from "../lib/features/home/home.service";
+import Hero from "../components/Hero.astro";
+
+const home = await getHome();
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -9,6 +17,8 @@
 		<title>Paempanadas</title>
 	</head>
 	<body>
+		<Header home={home} />
+		<Hero imagenFondoHomePage={home.imagenFondoHomePage} alternativeText={home.alternativeText} />
 		<slot />
 	</body>
 </html>
@@ -17,10 +27,18 @@
 	:root {
 		--font-primary: 'Libre Caslon Condensed';
 		--font-title: 'Instrument Sans';
+		--font-decorative: 'Hammersmith One';
 		--font-semibold: 600;
 		--font-medium: 500;
 		--font-regular: 400;
 		--font-bold: 800;
+		--txt-size-small: 1em;
+		--txt-size-medium: 2rem;
+		--txt-size-title: 1.8rem;
+
+		--color-menu: #fff2dc;
+		--color-black: #080808;
+		--color-red: rgb(202, 48, 48);
 	}
 
 	@font-face {
@@ -40,6 +58,13 @@
 		font-display: swap;
 	}
 
+	@font-face {
+		font-family: "Hammersmith One";
+		src: url("/fonts/HammersmithOne-Regular.woff2") format("woff2");
+		font-style: bold;
+		font-display: swap;
+	}
+
 	@media (max-width: 768px) {
 		html,
 		body {
@@ -51,6 +76,7 @@
 
 		body {
 			font-size: 16px;
+			background-color: rgb(248, 160, 46);
 		}
 	}
 
