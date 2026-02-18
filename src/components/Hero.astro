@@ -1,30 +1,17 @@
 ---
-import { getHome } from '../features/home/home.service';
-
-const strapiData = await getHome();
-
-const { title, imagenFondoHomePage, alternativeText } = strapiData;
-
-const primeros5letas = title.slice(0, 6);
-const restoLetras = title.slice(6);
-
+const { imagenFondoHomePage, alternativeText } = Astro.props;
 ---
 <article class="hero">
   <section>
     <img src={imagenFondoHomePage} alt={alternativeText} class="banner" />
     <button class="hero_button_pedir">Pedir</button>
   </section>
-  <h1 class="hero_titulo_main">
-    <span>{primeros5letas}</span>
-    <span>{restoLetras}</span>
-  </h1>
 </article>
 
 <style>
   .hero {
     width: 100vw;
     height: 100vh;
-    background-color: antiquewhite;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,8 +32,9 @@ const restoLetras = title.slice(6);
     width: 100%;
     text-align: center;
     font-family: var(--font-title);
-    font-size: 5.5rem;
+    font-size: var(--txt-size-title);
     font-weight: var(--font-bold);
+    
   }
 
   .banner {
