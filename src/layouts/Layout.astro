@@ -1,7 +1,8 @@
 ---
 import Header from "../components/header/Header.astro"
 import { getHome } from "../lib/features/home/home.service";
-import Hero from "../components/Hero.astro";
+import Hero from "../components/hero/Hero.astro";
+import "../styles/global.css";
 
 const home = await getHome();
 ---
@@ -14,7 +15,7 @@ const home = await getHome();
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Paempanadas</title>
+		<title>{home.title}</title>
 	</head>
 	<body>
 		<Header home={home} />
@@ -27,7 +28,7 @@ const home = await getHome();
 	:root {
 		--font-primary: 'Libre Caslon Condensed';
 		--font-title: 'Instrument Sans';
-		--font-decorative: 'Hammersmith One';
+		--font-decorative: 'SourGummy';
 		--font-semibold: 600;
 		--font-medium: 500;
 		--font-regular: 400;
@@ -36,10 +37,11 @@ const home = await getHome();
 		--txt-size-medium: 2rem;
 		--txt-size-title: 1.8rem;
 
-		--color-menu: #dcf7ff;
-		--color-black: #080808;
-		--color-red: #F4A261;
-		--color-background: #FFF1E6;
+		--color-ivory: #F8F4E3;
+		--color-white: #FDFDFF;
+		--color-black: #020202;
+		--color-green: #28965A;
+		--color-background: #F8F4E3;
 	}
 
 	@font-face {
@@ -63,6 +65,15 @@ const home = await getHome();
 		font-family: "Hammersmith One";
 		src: url("/fonts/HammersmithOne-Regular.woff2") format("woff2");
 		font-style: bold;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'SourGummy';
+		src: url('./fonts/SourGummy-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+		font-weight: 100 900; /* variable */
+		font-stretch: 75% 125%; /* wdth si está soportado */
+		font-style: italic;
 		font-display: swap;
 	}
 
