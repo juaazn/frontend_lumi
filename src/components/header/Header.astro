@@ -1,16 +1,24 @@
 ---
-import ShoppingCart from "./ShoppingCart.astro";
-import ButtonAccesMenu from "./ButtonAccesMenu.astro";
-
-const { home } = Astro.props;
+import LinkButton from "../ui/navigation/LinkButton.astro";
 ---
 
 <header class="header">
     <nav class="header_container">
-        <h1 class="header_titulo">{home.title}</h1>
+        <img class="logo_lumi" src="/lumi.svg" alt="Logo Lumi">
         <div class="header_buttons">
-            <ShoppingCart />    
-            <ButtonAccesMenu />
+            <LinkButton 
+                contentType="icon" 
+                iconSrc="/shopping_cart.svg" 
+                iconAlt="Carrito de compras" 
+                href="/cart"
+                className="button_primary"
+            /> 
+            <LinkButton 
+                contentType="text" 
+                label="Menú" 
+                href="/menu"
+                className="button_primary" 
+            />
         </div>
     </nav>
 </header>
@@ -30,8 +38,8 @@ const { home } = Astro.props;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 1rem 0 1rem;
-        background-color: var(--color-red);
+        padding: 0 1rem 0 1.5rem;
+        background-color: var(--color-green);
         border: .1rem solid var(--color-black);
         border-right: none;
         border-radius: 2rem 0 0 2rem;
@@ -42,11 +50,8 @@ const { home } = Astro.props;
         gap: .8rem;
     }
 
-    .header_titulo {
-        margin: 0;
-        text-align: center;
-        font-family: var(--font-decorative);
-        font-size: var(--txt-size-title);
-        font-weight: var(--font-bold);
+    .logo_lumi {
+        width: 5.5rem;
     }
+
 </style>
