@@ -1,0 +1,29 @@
+.button_primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  padding: 0 .6rem;
+  height: 2rem;
+  background-color: var(--color-white);
+  border-radius: 1rem;
+  border: 0.1rem solid var(--color-black);
+  box-shadow: 0.25rem 0.15rem 0 0.1rem var(--color-black);
+  color: var(--color-black);
+  font-family: var(--font-title);
+  font-weight: var(--font-bold);
+  font-size: var(--txt-size-small);
+  text-decoration: none;
+}
+
+.link_button_icon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.slider_button_image {
+  max-width: 1.2rem;
+  max-height: 1.2rem;
+  object-fit: contain;
+}
