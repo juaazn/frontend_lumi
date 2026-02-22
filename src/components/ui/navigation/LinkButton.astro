@@ -1,0 +1,29 @@
+---
+type BaseProps = {
+  href: string;
+  className?: string;
+};
+
+type IconProps = BaseProps & {
+  contentType: "icon";
+  iconSrc: string;
+  iconAlt: string;
+};
+
+type TextProps = BaseProps & {
+  contentType: "text";
+  label: string;
+};
+
+type Props = TextProps | IconProps;
+
+const props: Props = Astro.props;
+---
+
+<a href={props.href} class={`link_button ${props.className ?? ""}`.trim()}>
+  {props.contentType === "icon" ? (
+    <img src={props.iconSrc} alt={props.iconAlt} class="link_button_icon"/>
+  ) : (
+    props.label
+  )}
+</a>
