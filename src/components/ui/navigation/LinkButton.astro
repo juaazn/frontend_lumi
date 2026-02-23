@@ -1,21 +1,5 @@
 ---
-type BaseProps = {
-  href: string;
-  className?: string;
-};
-
-type IconProps = BaseProps & {
-  contentType: "icon";
-  iconSrc: string;
-  iconAlt: string;
-};
-
-type TextProps = BaseProps & {
-  contentType: "text";
-  label: string;
-};
-
-type Props = TextProps | IconProps;
+import type  { Props } from "../../../types/domain/linkButton.types";
 
 const props: Props = Astro.props;
 ---

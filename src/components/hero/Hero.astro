@@ -15,8 +15,8 @@ const { imagenFondoHomePage, alternativeText } = Astro.props;
 </article>
 
 <nav class="slider_interaction">
-  <SliderButton client:idle contentType="img" imgSrc="/icon_back_slider.svg" imgAlt="Botón de retroceso" className="button_primary" />
-  <SliderButton client:idle contentType="img" imgSrc="/icon_next_slider.svg" imgAlt="Botón de avance" className="button_primary" />
+  <SliderButton client:idle props={{contentType: "img", imgSrc: "/icon_back_slider.svg", imgAlt:"Botón de retroceso", className: "button_primary"}} />
+  <SliderButton client:idle props={{contentType: "img", imgSrc: "/icon_next_slider.svg", imgAlt:"Botón de avance", className: "button_primary"}} />
 </nav>
 
 <style>
