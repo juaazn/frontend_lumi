@@ -1,104 +1,15 @@
 ---
-import SliderButton from "../ui/interactive/SliderButton.svelte";
+import HeroSlider from "./HeroSlider.svelte";
+import type { HeroSlides } from "../../types/domain/heroSlider.types";
+import { getHeroSlides } from "../../lib/features/heroSlider/heroSlider.service";
+
 const { imagenFondoHomePage, alternativeText } = Astro.props;
-import { getHeroSlides } from "../../lib/features/heroSlider/heroSlider.service"
 
-const data = await getHeroSlides();
-console.log(data);
-
+const slides: HeroSlides = await getHeroSlides();
 ---
-<article class="hero">
-  <div class="hero_container_banner">
-    <img src={imagenFondoHomePage} alt={alternativeText} class="hero_banner" />
-  </div>
-  <h1 class="hero_name_product_title">Max Green</h1>
-  <h2 class="hero_subtitle">Ensalda verder salsa menta frutos secos</h2>
-  <div class="hero_description_product">
-    <strong><p class="hero_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem vel quos</p></strong>
-    <strong><p class="hero_description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem vel quos</p></strong>
-  </div>
-</article>
-
-<nav class="slider_interaction">
-  <SliderButton client:idle props={{contentType: "img", imgSrc: "/icon_back_slider.svg", imgAlt:"Botón de retroceso", className: "button_primary"}} />
-  <SliderButton client:idle props={{contentType: "img", imgSrc: "/icon_next_slider.svg", imgAlt:"Botón de avance", className: "button_primary"}} />
-</nav>
-
-<style>
-  .hero {
-    margin: 0 auto;
-    margin-top: 1rem;
-    margin-bottom: 1.5rem;
-    width: 90vw;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .hero_name_product_title {
-    margin: 0;
-    font-family: var(--font-title);
-    font-weight: var(--font-bold);
-  }
-
-  .hero_title {
-    margin: 0;
-    text-align: center;
-    font-family: var(--font-decorative);
-    font-weight: var(--font-bold);
-  }
-
-  .hero_subtitle {
-    display: flex;
-    flex-direction: column;
-    gap: .2rem;
-    font-family: var(--font-title);
-    font-weight: var(--font-semibold);
-  }
-  .hero_container_description {
-    width: 100%;
-    display: flex;
-  }
-
-  .hero_description {
-    margin: 0;
-    font-family: var(--font-title);
-    font-weight: var(--font-medium);
-    font-
-  }
-
-  .hero_description_product {
-    display: flex;
-    gap: .5rem;
-  }
-
-  .hero_button_pedir {
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    width: 10rem;
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .hero_container_banner {
-    width: 100%;
-    height: 20rem;
-    overflow: hidden;
-  }
-
-  .hero_banner {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .slider_interaction {    
-    margin: 0 auto;
-    width: 90vw;
-    display: flex;
-    justify-content: left;
-    gap: 10rem;
-    margin-top: 1rem;
-  }
-</style>
+<HeroSlider
+  client:load
+  slides={slides}
+  fallbackImage={imagenFondoHomePage}
+  fallbackAlt={alternativeText}
+/>
