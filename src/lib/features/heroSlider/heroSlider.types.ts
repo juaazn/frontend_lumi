@@ -1,19 +1,16 @@
-export interface HeroSlideApiItem {
+export interface HeroSlideApiResponse {
+  data: HeroSlideApi[];
+}
+
+export interface HeroSlideApi {
   id: number;
-  attributes: {
-    title: string;
-    subtitle: string;
-    description: string;
-    order: number;
-    active: boolean;
-    imageProduct: {
-      data: {
-        attributes: {
-          url: string;
-          alternativeText: string | null;
-        };
-      } | null;
-    };
+  title: string;
+  subtitle: string;
+  description: string;
+  order: number;
+  imageProduct?: {
+    url: string;
+    alternativeText?: string;
   };
 }
 
@@ -25,8 +22,4 @@ export interface HeroSlide {
   order: number;
   imageUrl: string;
   alt: string;
-}
-
-export interface HeroSlideApiResponse {
-  data: HeroSlideApiItem[];
 }
