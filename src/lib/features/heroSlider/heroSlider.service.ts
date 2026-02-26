@@ -1,5 +1,5 @@
 import qs from 'qs';
-import type { HeroSlide, HeroSlideApiResponse } from './heroSlider.types';
+import type { HeroSlide, HeroSlideApiResponse } from '../../../types/services/heroSlider.types';
 import { fetchStrapiData } from '../../services/strapi.service';
 import { mapHeroSlides } from './heroSlider.mapper';
 

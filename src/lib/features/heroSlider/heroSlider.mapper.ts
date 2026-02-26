@@ -1,4 +1,4 @@
-import type { HeroSlide, HeroSlideApiResponse } from './heroSlider.types';
+import type { HeroSlide, HeroSlideApiResponse } from '../../../types/services/heroSlider.types';
 
 export function mapHeroSlides(api: HeroSlideApiResponse): HeroSlide[] {
   return api.data.map((slide) => ({
