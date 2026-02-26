@@ -1,4 +1,4 @@
-import type { HomePage, HomeApiResponse } from '../../../types/services/home.types';
+import type { HomePage, HomeApiResponse } from './home.types';
 import { fetchStrapiData } from '../../services/strapi.service';
 import { mapHomePage } from './home.mapper';
 

@@ -1,4 +1,4 @@
-import type { HomeApiResponse, HomePage } from "../../../types/services/home.types";
+import type { HomeApiResponse, HomePage } from "./home.types";
 import imagenAlternativa from "../../../assets/imagen_alternativa_principal.png";
 
 export function mapHomePage (api: HomeApiResponse): HomePage {
