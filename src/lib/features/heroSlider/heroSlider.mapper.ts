@@ -7,13 +7,7 @@ export function mapHeroSlides(api: HeroSlideApiResponse): HeroSlide[] {
     subtitle: slide.attributes.subtitle,
     description: slide.attributes.description,
     order: slide.attributes.order,
-    imageUrl:
-      slide.attributes.imageProduct?.data
-        ? import.meta.env.STRAPI_URL +
-          slide.attributes.imageProduct.data.attributes.url
-        : "No Image",
-    alt:
-      slide.attributes.imageProduct?.data?.attributes.alternativeText ??
-      "Image Product",
+    imageUrl: slide.attributes.imageProduct?.data?.attributes.url ?? "",
+    alt: slide.attributes.imageProduct?.data?.attributes.alternativeText ?? "",
   }));
 }

@@ -1,6 +1,11 @@
 ---
 import SliderButton from "../ui/interactive/SliderButton.svelte";
 const { imagenFondoHomePage, alternativeText } = Astro.props;
+import { getHeroSlides } from "../../lib/features/heroSlider/heroSlider.service"
+
+const data = await getHeroSlides();
+console.log(data);
+
 ---
 <article class="hero">
   <div class="hero_container_banner">
