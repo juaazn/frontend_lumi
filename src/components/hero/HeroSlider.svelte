@@ -1,69 +1,80 @@
+<svelte:options runes={true} />
 <script lang="ts">
-  import { onDestroy, onMount } from "svelte";
   import SliderButton from "../ui/interactive/SliderButton.svelte";
-  import type { HeroSlides } from "../../types/domain/heroSlider.types";
+  import { createSliderAutoplay } from "./logic/sliderAutoplay.svelte";
+  import { createSliderNavigation } from "./logic/sliderNavigation.svelte";
+  import { createSliderSwipe } from "./logic/sliderSwipe.svelte";
+  import type { HeroSliderProps } from "../../types/domain/heroSlider.types";
 
-  export let slides: HeroSlides = [];
-  export let fallbackImage = "";
-  export let fallbackAlt = "Error al cargar la imagen del slider, se cargará una imagen genérica";
-  export let autoplay = true;
-  export let autoplayMs = 5000;
+  let {
+    slides = [],
+    fallbackImage = "",
+    fallbackAlt = "Error al cargar la imagen del slider, se cargará una imagen genérica",
+    autoplay = true,
+    autoplayMs = 5000,
+  }: HeroSliderProps = $props();
 
-  let currentIndex = 0;
-  let autoplayId: ReturnType<typeof setInterval> | undefined;
-
-  $: hasSlides = slides.length > 0;
-  $: if (hasSlides && currentIndex >= slides.length) {
-    currentIndex = 0;
-  }
-  $: currentSlide = hasSlides ? slides[currentIndex] : null;
-
-  onMount(() => {
-    if (!autoplay || autoplayMs <= 0 || slides.length <= 1) return;
-
-    autoplayId = setInterval(() => {
-      if (slides.length <= 1) return;
-      currentIndex = (currentIndex + 1) % slides.length;
-    }, autoplayMs);
+  const navigation = createSliderNavigation({
+    getSlides: () => slides,
   });
 
-  onDestroy(() => {
-    if (!autoplayId) return;
-    clearInterval(autoplayId);
-    autoplayId = undefined;
+  const autoplayController = createSliderAutoplay({
+    isEnabled: () => autoplay,
+    getDelayMs: () => autoplayMs,
+    getSlideCount: () => navigation.slideCount,
+    onTick: () => navigation.next(),
   });
 
-  function handlePrev() {
-    if (!hasSlides) return;
-    const nextIndex = (currentIndex - 1 + slides.length) % slides.length;
-    currentIndex = nextIndex;
-  }
+  const swipe = createSliderSwipe({
+    canSwipe: () => navigation.slideCount > 1,
+    onSwipeLeft: () => {
+      navigation.next();
+      autoplayController.restart();
+    },
+    onSwipeRight: () => {
+      navigation.prev();
+      autoplayController.restart();
+    },
+  });
 
-  function handleNext() {
-    if (!hasSlides) return;
-    const nextIndex = (currentIndex + 1) % slides.length;
-    currentIndex = nextIndex;
-  }
+  const trackStyle = $derived(`transform: translateX(-${navigation.currentIndex * 100}%);`);
 
-  function goToSlide(index: number) {
-    if (!hasSlides) return;
-    currentIndex = index;
+  function navigateWithAutoplayRestart(action: () => void) {
+    action();
+    autoplayController.restart();
   }
 </script>
 
 <article class="hero">
-  <div class="hero_container_banner">
-    <img
-      loading="lazy"
-      src={currentSlide?.imageUrl || fallbackImage}
-      alt={currentSlide?.alt || fallbackAlt}
-      class="hero_banner"
-    />
+  <div
+    role="region"
+    aria-label="Imagen del slider hero" 
+    class="hero_container_banner"
+    ontouchstart={swipe.handleTouchStart}
+    ontouchmove={swipe.handleTouchMove}
+    ontouchend={swipe.handleTouchEnd}
+    ontouchcancel={swipe.handleTouchEnd}
+  >
+    {#if navigation.hasSlides}
+      <div class="hero_banner_track" style={trackStyle}>
+        {#each slides as slide, index}
+          <img
+            loading={index === 0 ? "eager" : "lazy"}
+            src={slide.imageUrl || fallbackImage}
+            alt={slide.alt || fallbackAlt}
+            class="hero_banner"
+            aria-hidden={index !== navigation.currentIndex}
+          />
+        {/each}
+      </div>
+    {:else}
+      <img loading="eager" src={fallbackImage} alt={fallbackAlt} class="hero_banner" />
+    {/if}
   </div>
-  <h1 class="hero_name_product_title">{currentSlide?.title ?? ""}</h1>
-  <h2 class="hero_subtitle">{currentSlide?.subtitle ?? ""}</h2>
+  <h1 class="hero_name_product_title">{navigation.currentSlide?.title ?? ""}</h1>
+  <h2 class="hero_subtitle">{navigation.currentSlide?.subtitle ?? ""}</h2>
   <div class="hero_description_product">
-    <p class="hero_description">{currentSlide?.description ?? ""}</p>
+    <p class="hero_description">{navigation.currentSlide?.description ?? ""}</p>
   </div>
   <nav class="slider_interaction" aria-label="Controles del slider hero">
     <SliderButton
@@ -72,19 +83,19 @@
         imgSrc: "/icon_back_slider.svg",
         imgAlt: "Botón de retroceso",
         className: "button_primary",
-        onClick: handlePrev,
-        disabled: !hasSlides,
+        onClick: () => navigateWithAutoplayRestart(navigation.prev),
+        disabled: !navigation.hasSlides,
       }}
     />
     <div class="slider_indicators" aria-label="Indicadores de slide">
       {#each slides as _, index}
         <button
           type="button"
-          class={`slider_indicator ${index === currentIndex ? "is-active" : ""}`.trim()}
+          class={`slider_indicator ${index === navigation.currentIndex ? "is-active" : ""}`.trim()}
           aria-label={`Ir al slide ${index + 1}`}
-          aria-current={index === currentIndex ? "true" : undefined}
-          on:click={() => goToSlide(index)}
-          disabled={!hasSlides}
+          aria-current={index === navigation.currentIndex ? "true" : undefined}
+          onclick={() => navigateWithAutoplayRestart(() => navigation.goTo(index))}
+          disabled={!navigation.hasSlides}
         ></button>
       {/each}
     </div>
@@ -94,8 +105,8 @@
         imgSrc: "/icon_next_slider.svg",
         imgAlt: "Botón de avance",
         className: "button_primary",
-        onClick: handleNext,
-        disabled: !hasSlides,
+        onClick: () => navigateWithAutoplayRestart(navigation.next),
+        disabled: !navigation.hasSlides,
       }}
     />
   </nav>
@@ -140,11 +151,23 @@
     width: 100%;
     height: 20rem;
     overflow: hidden;
+    touch-action: pan-y;
+    position: relative;
+  }
+
+  .hero_banner_track {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.45s ease;
+    will-change: transform;
   }
 
   .hero_banner {
     width: 100%;
     height: 100%;
+    min-width: 100%;
+    flex: 0 0 100%;
     object-fit: cover;
   }
 
@@ -179,6 +202,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero_banner_track {
+      transition: none;
+    }
+
     .slider_indicator {
       transition: none;
       width: 1.8rem;
