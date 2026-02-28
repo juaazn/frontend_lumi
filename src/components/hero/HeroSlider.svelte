@@ -1,10 +1,11 @@
 <script lang="ts">
   import SliderButton from "../ui/interactive/SliderButton.svelte";
   import type { HeroSlides } from "../../types/domain/heroSlider.types";
+  import imageGeneric from "../../assets/image_generic.png";
 
   export let slides: HeroSlides = [];
-  export let fallbackImage = "";
-  export let fallbackAlt = "";
+  export let fallbackImage = "" + imageGeneric;
+  export let fallbackAlt = "Error al cargar la imagen del slider, se cargará una imagen genérica";
 
   let currentIndex = 0;
 
