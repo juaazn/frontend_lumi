@@ -79,24 +79,12 @@
     font-weight: var(--font-bold);
   }
 
-  .hero_title {
-    margin: 0;
-    text-align: center;
-    font-family: var(--font-decorative);
-    font-weight: var(--font-bold);
-  }
-
   .hero_subtitle {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
     font-family: var(--font-title);
     font-weight: var(--font-semibold);
-  }
-
-  .hero_container_description {
-    width: 100%;
-    display: flex;
   }
 
   .hero_description {
@@ -108,16 +96,6 @@
   .hero_description_product {
     display: flex;
     gap: 0.5rem;
-  }
-
-  .hero_button_pedir {
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    width: 10rem;
-    height: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .hero_container_banner {
