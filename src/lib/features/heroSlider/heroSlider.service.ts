@@ -12,7 +12,7 @@ const query = qs.stringify(
     sort: ["order:asc"],
     populate: {
       imageProduct: {
-        fields: ["url", "alternativeText"],
+      fields: ["url", "alternativeText", "formats"],
       },
     },
   },
@@ -22,6 +22,8 @@ const query = qs.stringify(
   const response = await fetchStrapiData<HeroSlideApiResponse>(
     `/hero-slides?${query}`
   );
+
+  console.log("🚀 ~ file: heroSlider.service.ts:34 ~ getHeroSlides ~ response:", response);
 
   return mapHeroSlides(response);
 }
