@@ -1,9 +1,16 @@
 ---
 import Menu from '../components/menu/Menu.astro';
+import LinkButton from '../components/ui/navigation/LinkButton.astro';
 import Layout from '../layouts/Layout.astro';
 
 ---
 
 <Layout >
   <Menu />
+  <LinkButton
+    contentType="text"
+    label="Comenzar pedido"
+    href="/menu"
+    className="button_flotante"
+  />
 </Layout>
