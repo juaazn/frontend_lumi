@@ -9,3 +9,11 @@ export type HeroSlide = {
 };
 
 export type HeroSlides = HeroSlide[];
+
+export interface HeroSliderProps {
+  slides?: HeroSlides;
+  fallbackImage?: string;
+  fallbackAlt?: string;
+  autoplay?: boolean;
+  autoplayMs?: number;
+}

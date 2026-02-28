@@ -23,7 +23,5 @@ const query = qs.stringify(
     `/hero-slides?${query}`
   );
 
-  console.log("🚀 ~ file: heroSlider.service.ts:34 ~ getHeroSlides ~ response:", response);
-
   return mapHeroSlides(response);
 }
