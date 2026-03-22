@@ -3,6 +3,6 @@ import { fetchStrapiData } from '../../services/strapi.service';
 import { mapHomePage } from './home.mapper';
 
 export async function getHome(): Promise<HomePage> {
-  const response: HomeApiResponse = await fetchStrapiData('/home-page?populate=*');
+  const response: HomeApiResponse = await fetchStrapiData('/home?populate=*');
   return mapHomePage(response);
 }
