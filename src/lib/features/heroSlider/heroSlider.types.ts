@@ -9,19 +9,25 @@ export interface HeroSlideApi {
   description: string;
   order: number;
   active: boolean;
-  imageProduct: HeroImageApi[];
+  image_slide: HeroImageApi | null;
 }
 
 export interface HeroImageApi {
   id: number;
   url: string;
   alternativeText?: string | null;
-  formats?: {
-    small?: { url: string };
-    medium?: { url: string };
-    large?: { url: string };
-    thumbnail?: { url: string };
-  };
+  formats?: HeroImageFormats | null;
+}
+
+export interface HeroImageFormats {
+  thumbnail?: HeroImageFormat;
+  small?: HeroImageFormat;
+  medium?: HeroImageFormat;
+  large?: HeroImageFormat;
+}
+
+export interface HeroImageFormat {
+  url: string;
 }
 
 export interface HeroSlide {
@@ -34,4 +40,4 @@ export interface HeroSlide {
   alt: string;
 }
 
-export type ImageSize = "small" | "medium" | "large" | "thumbnail" | "original";
+export type ImageSize = "thumbnail" | "small" | "medium" | "large" | "original";

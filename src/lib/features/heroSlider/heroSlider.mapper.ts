@@ -1,25 +1,22 @@
-import type { 
-  HeroSlide, 
-  HeroSlideApiResponse, 
-  ImageSize 
+import type {
+  HeroSlide,
+  HeroSlideApiResponse,
+  ImageSize,
 } from "./heroSlider.types";
 
-export function mapHeroSlides(api: HeroSlideApiResponse, size: ImageSize = "small"): HeroSlide[] {
+export function mapHeroSlides(
+  api: HeroSlideApiResponse,
+  size: ImageSize = "small"
+): HeroSlide[] {
   const baseUrl = import.meta.env.STRAPI_URL;
 
   return api.data.map((slide) => {
-    const image = slide.imageProduct?.[0];
+    const image = slide.image_slide;
 
-    let imagePath = "";
-
-    if (size === "original") {
-      imagePath = image?.url ?? "";
-    } else {
-      imagePath =
-        image?.formats?.[size]?.url ??
-        image?.url ??
-        "";
-    }
+    const imagePath =
+      size === "original"
+        ? image?.url ?? ""
+        : image?.formats?.[size]?.url ?? image?.url ?? "";
 
     return {
       id: slide.id,
