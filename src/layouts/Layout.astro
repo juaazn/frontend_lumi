@@ -1,10 +1,14 @@
 ---
-import Header from "../components/header/Header.astro"
 import { getHome } from "../lib/features/home/home.service";
+import { getHeroSlides } from "../lib/features/heroSlider/heroSlider.service";
+import Header from "../components/header/Header.astro"
 import Hero from "../components/hero/Hero.astro";
 import "../styles/global.css";
+import { Font } from "astro:assets";
+
 
 const home = await getHome();
+const slider = await getHeroSlides();
 ---
 
 <!doctype html>
@@ -14,21 +18,24 @@ const home = await getHome();
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<Font cssVariable="--font-libre-caslon-condensed" />
+    <Font cssVariable="--font-instrument-sans" preload />
+    <Font cssVariable="--font-sour-gummy" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{home.title}</title>
 	</head>
 	<body>
 		<Header home={home} />
-		<Hero imagenFondoHomePage={home.imagenFondoHomePage} alternativeText={home.alternativeText} />
+		<Hero imagenFondoHomePage={slider[0]} alternativeText={slider[0].alt} />
 		<slot />
 	</body>
 </html>
 
 <style is:global>
 	:root {
-		--font-primary: 'Libre Caslon Condensed';
-		--font-title: 'Instrument Sans';
-		--font-decorative: 'SourGummy';
+		--font-primary: var(--font-libre-caslon-condensed);
+		--font-title: var(--font-instrument-sans);
+		--font-decorative: var(--font-sour-gummy);
 		--font-semibold: 600;
 		--font-medium: 500;
 		--font-regular: 400;
@@ -42,39 +49,6 @@ const home = await getHome();
 		--color-black: #020202;
 		--color-green: #28965A;
 		--color-background: #F8F4E3;
-	}
-
-	@font-face {
-    font-family: 'Instrument Sans';
-    src: url('/fonts/InstrumentSans-VariableFont_wdth,wght.woff2') format('woff2');
-    font-weight: 200 900;
-    font-style: normal;
-    font-display: swap;
-  }
-
-
-	@font-face {
-		font-family: 'Libre Caslon Condensed';
-		src: url('/fonts/LibreCaslonCondensed.woff2') format('woff2');
-		font-weight: 200 900;
-		font-style: normal;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: "Hammersmith One";
-		src: url("/fonts/HammersmithOne-Regular.woff2") format("woff2");
-		font-style: bold;
-		font-display: swap;
-	}
-
-	@font-face {
-		font-family: 'SourGummy';
-		src: url('./fonts/SourGummy-Italic-VariableFont_wdth,wght.ttf') format('truetype');
-		font-weight: 100 900; /* variable */
-		font-stretch: 75% 125%; /* wdth si está soportado */
-		font-style: italic;
-		font-display: swap;
 	}
 
 	@media (max-width: 768px) {
