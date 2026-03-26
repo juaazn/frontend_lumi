@@ -126,18 +126,21 @@
     margin: 0;
     font-family: var(--font-title);
     font-weight: var(--font-bold);
+    color: var(--color-white);
   }
 
   .hero_subtitle {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    color: var(--color-white);
     font-family: var(--font-title);
     font-weight: var(--font-semibold);
   }
 
   .hero_description {
     margin: 0;
+    color: var(--color-white);
     font-family: var(--font-title);
     font-weight: var(--font-medium);
   }
