@@ -186,7 +186,7 @@
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 999px;
-    border: 1px solid var(--color-black);
+    border: 1px solid var(--color-white);
     background-color: transparent;
     cursor: pointer;
     margin: 0 0.2rem;
@@ -199,7 +199,7 @@
 
   .slider_indicator.is-active {
     width: 1.8rem;
-    background-color: var(--color-black);
+    background-color: var(--color-white);
     animation: pulse 1s ease;
     transform: scale(1.05);
   }
